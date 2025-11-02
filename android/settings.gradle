@@ -1,4 +1,10 @@
 rootProject.name = 'MyRealApp'
+
+// This is required for React Native 0.74+
+apply from: file("../node_modules/@react-native/gradle-plugin/gradle-utils.gradle")
+
+includeBuild(resolveGradleProject(":@react-native/gradle-plugin"))
+
 include ':app'
 
 // Add this for react-native-firebase
