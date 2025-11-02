@@ -33,11 +33,21 @@ jobs:
       - name: Verify node_modules exists
         run: |
           echo "Checking node_modules structure..."
-          ls -la node_modules/react-native/scripts/ || echo "react-native scripts not found"
-          ls -la node_modules/@react-native/gradle-plugin/ || echo "gradle-plugin not found"
           echo "Current directory: $(pwd)"
           echo "Directory contents:"
           ls -la
+          echo ""
+          echo "node_modules exists?"
+          ls -la node_modules/ | head -20
+          echo ""
+          echo "react-native exists?"
+          ls -la node_modules/react-native/ | head -10 || echo "NOT FOUND"
+          echo ""
+          echo "react-native scripts?"
+          ls -la node_modules/react-native/scripts/ | head -10 || echo "NOT FOUND"
+          echo ""
+          echo "@react-native/gradle-plugin exists?"
+          ls -la node_modules/@react-native/gradle-plugin/ | head -10 || echo "NOT FOUND"
 
       - name: Create google-services.json
         run: echo "${{ secrets.GOOGLE_SERVICES_JSON }}" > android/app/google-services.json
