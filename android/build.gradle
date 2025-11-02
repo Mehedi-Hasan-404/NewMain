@@ -7,6 +7,7 @@ buildscript {
         compileSdkVersion = 34
         targetSdkVersion = 34
         ndkVersion = "26.1.10909125"
+        kotlinVersion = "1.9.22"
         
         // This is needed by react-native-video
         exoplayerVersion = "2.19.1" 
@@ -18,13 +19,14 @@ buildscript {
     dependencies {
         classpath("com.android.tools.build:gradle:8.4.1")
         classpath("com.facebook.react:react-native-gradle-plugin")
+        classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion")
         // Add this for Firebase
-        classpath 'com.google.gms:google-services:4.4.2'
+        classpath("com.google.gms:google-services:4.4.2")
     }
 }
 
-// THIS IS THE NEW BLOCK THAT FIXES THE ERROR
-// It tells Gradle where to find the React Native code
+apply plugin: "com.facebook.react.rootproject"
+
 allprojects {
     repositories {
         maven {
