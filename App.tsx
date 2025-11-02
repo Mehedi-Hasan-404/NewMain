@@ -1,45 +1,53 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- */
-
-import { NewAppScreen } from '@react-native/new-app-screen';
-import { StatusBar, StyleSheet, useColorScheme, View } from 'react-native';
+// App.tsx
+import React from 'react';
 import {
-  SafeAreaProvider,
-  useSafeAreaInsets,
-} from 'react-native-safe-area-context';
+  StatusBar,
+  useColorScheme
+} from 'react-native';
+import {
+  NavigationContainer
+} from '@react-navigation/native';
+import {
+  QueryClient,
+  QueryClientProvider
+} from '@tanstack/react-query';
+import {
+  FavoritesProvider
+} from '@/contexts/FavoritesContext';
+import {
+  RecentsProvider
+} from '@/contexts/RecentsContext';
+import {
+  AppNavigator
+} from '@/navigation/AppNavigator';
+import {
+  ThemeProvider
+} from '@/components/ui/theme-provider';
 
-function App() {
+const queryClient = new QueryClient();
+
+const App = () => {
   const isDarkMode = useColorScheme() === 'dark';
 
   return (
-    <SafeAreaProvider>
-      <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} />
-      <AppContent />
-    </SafeAreaProvider>
+    <QueryClientProvider client={queryClient}>
+      <ThemeProvider defaultTheme="dark" storageKey="iptv-ui-theme">
+        <FavoritesProvider>
+          <RecentsProvider>
+            <NavigationContainer>
+              <StatusBar
+                barStyle={isDarkMode ? 'light-content' : 'dark-content'}
+                backgroundColor="transparent"
+                translucent={true}
+              />
+              <AppNavigator />
+              {/* Add your native Toaster provider here if needed */}
+            </NavigationContainer>
+          </RecentsProvider>
+        </FavoritesProvider>
+      </ThemeProvider>
+    </QueryClientProvider>
   );
-}
-
-function AppContent() {
-  const safeAreaInsets = useSafeAreaInsets();
-
-  return (
-    <View style={styles.container}>
-      <NewAppScreen
-        templateFileName="App.tsx"
-        safeAreaInsets={safeAreaInsets}
-      />
-    </View>
-  );
-}
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
-});
+};
 
 export default App;
