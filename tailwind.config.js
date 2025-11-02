@@ -1,10 +1,5 @@
-// tailwind.config.js
-const {
-  plugin
-} = require('taddy');
-
 /** @type {import('tailwindcss').Config} */
-module.NextTsx {
+module.exports = {
   darkMode: ["class"],
   content: [
     './src/screens/**/*.{js,ts,jsx,tsx}',
@@ -15,7 +10,6 @@ module.NextTsx {
   presets: [require("nativewind/preset")],
   theme: {
     extend: {
-      // Your theme from index.css can be ported here
       colors: {
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
@@ -56,8 +50,7 @@ module.NextTsx {
         md: "calc(var(--radius) - 2px)",
         sm: "calc(var(--radius) - 4px)",
       },
-      // ...etc
     },
   },
-  plugins: [plugin],
-}
+  plugins: [],
+};
