@@ -8,10 +8,8 @@ buildscript {
         targetSdkVersion = 34
         ndkVersion = "26.1.10909125"
         
-        // Add this for ExoPlayer
+        // From your previous setup
         exoplayerVersion = "2.19.1"
-        // Add this for Firebase
-        googlePlayServicesAuthVersion = "20.4.1" 
     }
     repositories {
         google()
@@ -20,7 +18,24 @@ buildscript {
     dependencies {
         classpath("com.android.tools.build:gradle:8.4.1")
         classpath("com.facebook.react:react-native-gradle-plugin")
-        // Add this for Firebase
         classpath 'com.google.gms:google-services:4.4.2'
     }
 }
+
+// THIS IS THE NEW BLOCK THAT FIXES THE ERROR
+// It tells Gradle where to find the React Native code
+allprojects {
+    repositories {
+        maven {
+            // All of React Native (JS, Obj-C sources, Android binaries) is installed from npm
+            url("$rootDir/../node_modules/react-native/android")
+        }
+        maven {
+            // Android JSC is installed from npm
+            url("$rootDir/../node_modules/jsc-android/dist")
+        }
+        google()
+        mavenCentral()
+    }
+}
+
