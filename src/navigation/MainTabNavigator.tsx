@@ -1,7 +1,8 @@
 // /src/navigation/MainTabNavigator.tsx
 import React from 'react';
 import {
-  Platform
+  Platform,
+  Pressable,
 } from 'react-native';
 import {
   createBottomTabNavigator
@@ -36,24 +37,28 @@ export const MainTabNavigator = () => {
           }
           return <IconComponent color={color} size={size} fill={focused ? color : 'none'} />;
         },
-        tabBarActiveTintColor: 'hsl(var(--primary))',
-        tabBarInactiveTintColor: 'hsl(var(--muted-foreground))',
+        tabBarActiveTintColor: '#8b5cf6',
+        tabBarInactiveTintColor: '#71717a',
         tabBarStyle: {
-          backgroundColor: 'hsl(var(--card))',
-          borderTopColor: 'hsl(var(--border))',
+          backgroundColor: '#18181b',
+          borderTopColor: '#27272a',
           display: isTV ? 'none' : 'flex', // Hide bottom tabs on TV
         },
         // TV-specific focus styling for tabs
-        tabBarButton: isTV ? (props) => <Pressable {...props} style={({
-          focused
-        }) => [
-          props.style, {
-            backgroundColor: focused ? 'hsl(var(--accent))' : 'transparent',
-            borderRadius: 8,
-            margin: 4,
-            padding: 8
-          }
-        ]} /> : undefined,
+        tabBarButton: isTV ? (props) => (
+          <Pressable 
+            {...props} 
+            style={({ focused }: any) => [
+              props.style, 
+              {
+                backgroundColor: focused ? '#27272a' : 'transparent',
+                borderRadius: 8,
+                margin: 4,
+                padding: 8
+              }
+            ]} 
+          />
+        ) : undefined,
       })}>
       <Tab.Screen name="Home" component={HomeScreen} />
       <Tab.Screen name="Favorites" component={FavoritesScreen} />
