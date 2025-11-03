@@ -8,8 +8,7 @@ buildscript {
         compileSdkVersion = 34
         targetSdkVersion = 34
         
-        // We are defining the NDK version consistently across the project.
-        // Your android.gradle.properties newArchEnabled=true requires this.
+        // This is required by your gradle.properties file
         ndkVersion = "26.1.10909125"
     }
     repositories {
