@@ -1,31 +1,31 @@
 apply plugin: "com.android.application"
+apply plugin: "org.jetbrains.kotlin.android"
 apply plugin: "com.facebook.react"
+
 // Add this for Firebase
 apply plugin: 'com.google.gms.google-services'
 
-/**
- * This is the configuration block to customize your React Native build.
- */
 react {
     /* Folders */
-    //   The root of your project, i.e. where 'package.json' lives. Default is '..'
     root = file("../../")
-    //   The folder where the react-native package is located. Default is '$root/node_modules/react-native'
     reactNativeDir = file("../../node_modules/react-native")
+    codegenDir = file("../../node_modules/@react-native/codegen")
+    cliFile = file("../../node_modules/react-native/cli.js")
 }
 
 android {
-    ndkVersion rootProject.ndkVersion
-    compileSdkVersion rootProject.compileSdkVersion
-    namespace "com.myrealapp" // This comes from your project init
+    ndkVersion rootProject.ext.ndkVersion
+    compileSdkVersion rootProject.ext.compileSdkVersion
+    namespace "com.myrealapp"
 
     defaultConfig {
-        applicationId "com.myrealapp" // This comes from your project init
-        minSdkVersion rootProject.minSdkVersion
-        targetSdkVersion rootProject.targetSdkVersion
+        applicationId "com.myrealapp"
+        minSdkVersion rootProject.ext.minSdkVersion
+        targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1
         versionName "1.0"
     }
+    
     signingConfigs {
         debug {
             storeFile file('debug.keystore')
@@ -34,31 +34,27 @@ android {
             keyPassword 'android'
         }
     }
+    
     buildTypes {
         debug {
             signingConfig signingConfigs.debug
         }
         release {
             signingConfig signingConfigs.debug
-            minifyEnabled true
+            minifyEnabled false
             proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
         }
     }
+}
 
-    dependencies {
-        // The version of react-native is set by the React Native Gradle Plugin
-        implementation "com.facebook.react:react-native:+"
-        implementation "androidx.swiperefreshlayout:swiperefreshlayout:1.1.0"
-
-        // Add this for ExoPlayer (used by react-native-video)
-        implementation "com.google.android.exoplayer:exoplayer:$rootProject.exoplayerVersion"
-        
-        // Add this for Firebase
-        implementation platform('com.google.firebase:firebase-bom:33.1.2')
-        implementation 'com.google.firebase:firebase-auth'
-        implementation 'com.google.firebase:firebase-firestore'
-        
-        // This is for new architecture, keep it
-        implementation "com.facebook.react:react-android"
+dependencies {
+    // The version of react-native is set by the React Native Gradle Plugin
+    implementation("com.facebook.react:react-android")
+    implementation("androidx.swiperefreshlayout:swiperefreshlayout:1.1.0")
+    
+    if (hermesEnabled.toBoolean()) {
+        implementation("com.facebook.react:hermes-android")
+    } else {
+        implementation jscFlavor
     }
 }
