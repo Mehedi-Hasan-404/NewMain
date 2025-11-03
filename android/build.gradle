@@ -7,6 +7,9 @@ buildscript {
         minSdkVersion = 21
         compileSdkVersion = 34
         targetSdkVersion = 34
+        
+        // We are defining the NDK version consistently across the project.
+        // Your android.gradle.properties newArchEnabled=true requires this.
         ndkVersion = "26.1.10909125"
     }
     repositories {
@@ -17,7 +20,7 @@ buildscript {
         // This is the Android Gradle Plugin
         classpath("com.android.tools.build:gradle:8.4.1")
         
-        // This is the React Native Gradle Plugin
+        // This is the React Native Gradle Plugin (THIS IS WHAT WAS MISSING)
         classpath("com.facebook.react:react-native-gradle-plugin")
         
         // This is for Firebase
