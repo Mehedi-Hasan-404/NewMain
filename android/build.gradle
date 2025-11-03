@@ -2,45 +2,39 @@
 
 buildscript {
     ext {
-        // These versions are standard for React Native 0.74+
         buildToolsVersion = "34.0.0"
         minSdkVersion = 21
         compileSdkVersion = 34
         targetSdkVersion = 34
-        
-        // This is required by your gradle.properties file
         ndkVersion = "26.1.10909125"
+        kotlinVersion = "1.9.22"
+        
+        // This is needed by react-native-video
+        exoplayerVersion = "2.19.1"
     }
     repositories {
         google()
         mavenCentral()
     }
     dependencies {
-        // This is the Android Gradle Plugin
-        classpath("com.android.tools.build:gradle:8.4.1")
-        
-        // This is the React Native Gradle Plugin (THIS IS WHAT WAS MISSING)
+        classpath("com.android.tools.build:gradle:8.3.0")
         classpath("com.facebook.react:react-native-gradle-plugin")
-        
-        // This is for Firebase
-        classpath("com.google.gms:google-services:4.4.2") 
+        classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion")
+        classpath("com.google.gms:google-services:4.4.2")
     }
 }
 
 allprojects {
     repositories {
-        google()
-        mavenCentral()
-        
-        // All of React Native (JS, Obj-C sources, Android binaries) is 
-        // installed from npm
         maven {
+            // All of React Native (JS, Obj-C sources, Android binaries) is installed from npm
             url("$rootDir/../node_modules/react-native/android")
         }
-        
-        // Android JSC is installed from npm
         maven {
+            // Android JSC is installed from npm
             url("$rootDir/../node_modules/jsc-android/dist")
         }
+        google()
+        mavenCentral()
     }
 }
